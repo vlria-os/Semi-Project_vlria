@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>admin/inbound_confirm.html</title>
+</head>
+<body>
+<h2>입고 승인 테스트 화면</h2>
+
+<form th:action="@{/admin/inbound_approval}" method="post">
+
+    <!-- Inbound -->
+    <div>
+        <label>Inbound ID</label>
+        <input type="number" name="inbound_id" value="1">
+    </div>
+
+    <!-- Inbound Detail -->
+    <div>
+        <label>Inbound Detail ID</label>
+        <input type="number" name="inbound_detail_id" value="1">
+    </div>
+
+    <div>
+        <label>Detail Approval Status</label>
+        <select name="approval_status">
+            <option value="REQUEST">REQUEST</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="REJECTED">REJECTED</option>
+        </select>
+    </div>
+
+    <!-- Approver -->
+    <div>
+        <label>Approver ID</label>
+        <input type="number" name="approver_id" value="100">
+    </div>
+
+    <br>
+    <button type="submit">승인 처리</button>
+
+</form>
+</body>
+</html>

@@ -40,4 +40,7 @@
             sysdate
         )
     </insert>
+    <select id="selectAll" resultType="ApprovalDto">
+        select * from approval
+    </select>
 </mapper>

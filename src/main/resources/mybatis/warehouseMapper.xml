@@ -8,7 +8,7 @@
         select sum(s.quantity)
         from stock s
         join lot_in l on s.lot_in_id=l.lot_in_id
-        where l.warehouse_id=#{value};
+        where l.warehouse_id=#{value}
     </select>
     <select id="warehouse_capacity" parameterType="int" resultType="int">
         select capacity from warehouse where warehouse_id=#{value}

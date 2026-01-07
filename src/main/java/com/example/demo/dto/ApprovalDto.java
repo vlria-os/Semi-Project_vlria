@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -16,5 +17,5 @@ public class ApprovalDto {
     private int inbound_id;
     private int outbound_id;
     private String approval_status;
-    private Date created_at;
+    private LocalDate created_at;
 }

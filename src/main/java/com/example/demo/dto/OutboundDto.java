@@ -1,10 +1,17 @@
 package com.example.demo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Date;
 
-public class Outbound_idDto {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OutboundDto {
     private int outbound_id;
     private int webuser_id;
     private Date request_date;
-    private String status;
+    private String approval_status;
 }

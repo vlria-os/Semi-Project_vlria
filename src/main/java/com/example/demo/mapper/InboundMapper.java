@@ -1,4 +1,11 @@
 package com.example.demo.mapper;
 
-public class Inbound_Mapper {
+import com.example.demo.dto.InboundDto;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface InboundMapper {
+    int insert(InboundDto inboundDto);
+    int update_status(int inbound_id);
+    String select_status(int inbound_id);
 }

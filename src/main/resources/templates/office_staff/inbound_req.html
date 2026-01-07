@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>office_staff/inbound_req.html</title>
 </head>
 <body>
-$END$
+<h2>입고 요청 테스트</h2>
+
+<form action="/office_staff/inbound_req" method="post">
+
+    <h3>요청 1</h3>
+    <label>상품 ID</label>
+    <input type="number" name="inbound_reqDtos[0].product_id" value="101"><br>
+
+    <label>창고 ID</label>
+    <input type="number" name="inbound_reqDtos[0].warehouse_id" value="1"><br>
+
+    <label>수량</label>
+    <input type="number" name="inbound_reqDtos[0].quantity" value="10"><br>
+
+    <label>요청자 ID</label>
+    <input type="number" name="inbound_reqDtos[0].webuser_id" value="5"><br>
+
+    <hr>
+
+    <h3>요청 2</h3>
+    <label>상품 ID</label>
+    <input type="number" name="inbound_reqDtos[1].product_id" value="102"><br>
+
+    <label>창고 ID</label>
+    <input type="number" name="inbound_reqDtos[1].warehouse_id" value="2"><br>
+
+    <label>수량</label>
+    <input type="number" name="inbound_reqDtos[1].quantity" value="20"><br>
+
+    <label>요청자 ID</label>
+    <input type="number" name="inbound_reqDtos[1].webuser_id" value="5"><br>
+
+    <hr>
+
+    <button type="submit">입고 요청 보내기</button>
+
+</form>
 </body>
 </html>

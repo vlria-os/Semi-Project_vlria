@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.Lot_outMapper">
+    <insert id="insert" parameterType="Lot_inDto">
+        <selectKey keyProperty="lot_out_id" resultType="int" order="BEFORE">
+            SELECT lot_out_seq.NEXTVAL FROM dual
+        </selectKey>
+        insert into lot_in(
+            lot_out_id,
+            outbound_detail_id,
+            warehouse_id,
+            is_expired,
+            shipped_date,
+            quantity
+        ) values(
+            #{lot_out_id},
+            #{outbound_detail_id},
+            #{warehouse_id},
+            'N',
+            sysdate,
+            #{quantity}
+        )
+    </insert>
+    <delete id="delete" parameterType="int">
+        delete from lot_out where lot_out_id=#{lot_out_id}
+    </delete>
+    <select id="select_lot" parameterType="int" resultType="Lot_outDto">
+        select stock_id, quantity from lot_out where outbound_detail_id=#{outbound_detail_id}
+    </select>
+    <update id="insert_date" parameterType="int">
+        update lot_out set shipped_date=sysdate where lot_out_id=#{lot_out_id}
+    </update>
+</mapper>

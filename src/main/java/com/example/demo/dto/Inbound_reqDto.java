@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class inbound_reqDto {
+public class Inbound_reqDto {
     private int product_id;
     private int warehouse_id;
     private int quantity;

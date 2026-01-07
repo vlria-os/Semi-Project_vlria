@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stock {
+public class StockDto {
     private int stock_id;
     private int lot_in_id;
     private int quantity;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.Outbound_detailMapper">
+    <insert id="insert">
+        insert into outbound_detail(
+            outbound_detail_id,
+            outbound_id,
+            product_id,
+            approval_status,
+            outbound_status,
+            quantity
+        ) values(
+            outbound_detail_seq.nextval,
+            #{outbound_id},
+            #{product_id},
+            'REQUEST',
+            'REQUEST',
+            #{quantity}
+        )
+    </insert>
+    <update id="update_status" parameterType="Outbound_detailDto">
+        update outbound_detail set approval_status=#{approval_status} where outbound_detail_id=#{outbound_detail_id}
+    </update>
+    <update id="update_status_ref" parameterType="Outbound_detailDto">
+        update outbound_detail set approval_status='REJECTED' where outbound_detail_id=#{outbound_detail_id}
+    </update>
+    <update id="update_status_conf" parameterType="Outbound_detailDto">
+        update outbound_detail set approval_status='CONFIRMED' where outbound_detail_id=#{outbound_detail_id}
+    </update>
+</mapper>

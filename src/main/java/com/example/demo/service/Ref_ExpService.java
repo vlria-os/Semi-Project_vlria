@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.*;
-import com.example.demo.mapper.Lot_outMapper;
-import com.example.demo.mapper.OutboundMapper;
-import com.example.demo.mapper.Outbound_detailMapper;
-import com.example.demo.mapper.StockMapper;
+import com.example.demo.mapper.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,12 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Ref_ExpService {
     private final OutboundMapper outboundMapper;
+    private final InboundMapper inboundMapper;
     private final Outbound_detailMapper outbound_detailMapper;
+    private final Inbound_detailMapper inbound_detailMapper;
     private final Lot_outMapper lot_outMapper;
+    private final Lot_inMapper lot_inMapper;
     private final StockMapper stockMapper;
 
     //@Transactional
-    @Scheduled(cron = "0 15 * * * *")
+    //@Scheduled(cron = "0 0 0 * * *")
     public void insert_expiration(){
         List<Select_outboundDto> select_outboundDtos=stockMapper.select_expiration();
 
@@ -43,7 +43,12 @@ public class Ref_ExpService {
     }
 
     @Transactional
-    public void insert_refund(){
+    public void insert_refund(RefundDto refundDto){
+        InboundDto inboundDto=new InboundDto(0,refundDto.getWebuser_id(),null,null,"Y",refundDto.getLot_out_id());
+        inboundMapper.insert(inboundDto);
+        Inbound_detailDto inbound_detailDto=new Inbound_detailDto(0, inboundDto.getInbound_id(), refundDto.getProduct_id(),
+                refundDto.getWarehouse_id(),null,null,null, refundDto.getQuantity());
+        inbound_detailMapper.insert(inbound_detailDto);
 
     }
 }

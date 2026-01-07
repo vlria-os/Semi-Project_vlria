@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class InboundService {
+    private final WarehouseMapper warehouseMapper;
     private final InboundMapper inboundMapper;
     private final Inbound_detailMapper inbound_detailMapper;
     private final ApprovalMapper approvalMapper;
@@ -52,6 +53,12 @@ public class InboundService {
     public int update_approval(int inbound_id,
                                Inbound_detailDto inbound_detailDto,
                                int approver_id){
+        //창고 한계 수량 점검
+        int stock= warehouseMapper.warehouse_stock(inbound_detailDto.getWarehouse_id());
+        int capacity= warehouseMapper.warehouse_capacity(inbound_detailDto.getWarehouse_id());
+        if(stock+inbound_detailDto.getQuantity()>capacity){
+            return -1;
+        }
 
         int n=inbound_detailMapper.update_appStatus(inbound_detailDto);
         int m=inboundMapper.update_status(inbound_id);
@@ -84,7 +91,8 @@ public class InboundService {
             }
             int m = inbound_detailMapper.update_inbStatus_conf(l.getInbound_detail_id());
         }
-        //로트별 승인, 반려 로직 추가 해야함
+        //로트별 승인, 반려 로직 추가 해야함 ...????
+        //확인자 아이디 추가 해야하는데.............
 
         return 1;
     }

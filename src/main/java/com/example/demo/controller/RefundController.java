@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.RefundDto;
 import com.example.demo.service.Ref_ExpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,8 @@ public class RefundController {
     }
 
     @PostMapping("/office_staff/inout_list")
-    public String refund(){
-
-        ref_ExpService.insert_refund();
-        return "";
+    public String refund(RefundDto refundDto){
+        ref_ExpService.insert_refund(refundDto);
+        return "/office_staff/inout_list";
     }
 }

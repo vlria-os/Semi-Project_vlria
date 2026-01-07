@@ -66,9 +66,18 @@ public class OutboundService {
             int b=outbound_detailMapper.update_outStatus_rej(outbound_detailDto.getOutbound_detail_id());
         }
 
+        //재고 확인
+        List<Select_outboundDto> select_outboundDtos=stockMapper.select_outbound(outbound_detailDto.getProduct_id());
+        for(Select_outboundDto s:select_outboundDtos){
+            int sum=0;
+            sum+=s.getQuantity();
+            if(sum<outbound_detailDto.getQuantity()){
+                return -1;
+            }
+        }
+
         //출고 확인 예정 로직
         int sum=0;
-        List<Select_outboundDto> select_outboundDtos=stockMapper.select_outbound(outbound_detailDto.getProduct_id());
         for(Select_outboundDto s:select_outboundDtos){
             sum += s.getQuantity();
             if(sum>=outbound_detailDto.getQuantity()) {

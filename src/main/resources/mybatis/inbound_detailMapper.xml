@@ -35,10 +35,21 @@
         SET inbound_status=#{inbound_status}
         WHERE inbound_detail_id=#{inbound_detail_id}
     </update>
-    <update id="update_status_rej" parameterType="String">
+    <update id="update_inbStatus_rej" parameterType="int">
+        update inbound_detail set inbound_status='REJECTED' where inbound_detail_id=#{inbound_detail_id}
+    </update>
+    <update id="update_inbStatus_conf" parameterType="int">
+        update inbound_detail set inbound_status='CONFIRMED' where inbound_detail_id=#{inbound_detail_id}
+    </update>
+    <update id="update_appStatus" parameterType="Inbound_detailDto">
+        UPDATE inbound_detail
+        SET approval_status=#{approval_status}
+        WHERE inbound_detail_id=#{inbound_detail_id}
+    </update>
+    <update id="update_appStatus_rej" parameterType="int">
         update inbound_detail set approval_status='REJECTED' where inbound_detail_id=#{inbound_detail_id}
     </update>
-    <update id="update_status_conf" parameterType="String">
+    <update id="update_appStatus_conf" parameterType="int">
         update inbound_detail set approval_status='CONFIRMED' where inbound_detail_id=#{inbound_detail_id}
     </update>
 </mapper>

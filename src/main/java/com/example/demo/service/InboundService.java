@@ -53,7 +53,7 @@ public class InboundService {
                                Inbound_detailDto inbound_detailDto,
                                int approver_id){
 
-        int n=inbound_detailMapper.update_status(inbound_detailDto);
+        int n=inbound_detailMapper.update_appStatus(inbound_detailDto);
         int m=inboundMapper.update_status(inbound_id);
         String status=inboundMapper.select_status(inbound_id);
 
@@ -63,25 +63,28 @@ public class InboundService {
                     status,null);
             int a=approvalMapper.insert_inbound(approvalDto);
         }
+
+        if(inbound_detailDto.getApproval_status().equals("REJECTED")){
+            int b=inbound_detailMapper.update_inbStatus_rej(inbound_detailDto.getInbound_detail_id());
+        }
         return 1;
     }
 
     @Transactional
-    public int insert_confirm(int inbound_detail_id,
-                              List<Lot_inDto> lot_inDtos,
-                              String status,
+    public int insert_confirm(List<Lot_inDto> lot_inDtos,
                               int confirmer_id){
 
-        if(status.equals("REJECTED")){
-            int m=inbound_detailMapper.update_status_rej(inbound_detail_id);
-        }
-        else {
-            for (Lot_inDto lot_inDto : lot_inDtos) {
-                int n = lot_inMapper.insert(lot_inDto);
-                int q = stockMapper.insert(new StockDto(0, lot_inDto.getLot_in_id(), lot_inDto.getQuantity()));
+        for (Lot_inDto l : lot_inDtos){
+            if(l.getInbound_status().equals("REJECTED")){
+                int m=inbound_detailMapper.update_inbStatus_rej(l.getInbound_detail_id());
             }
-            int m = inbound_detailMapper.update_status_conf(inbound_detail_id);
+            else {
+                int n = lot_inMapper.insert(l);
+                int q = stockMapper.insert(new StockDto(0, l.getLot_in_id(), l.getQuantity()));
+            }
+            int m = inbound_detailMapper.update_inbStatus_conf(l.getInbound_detail_id());
         }
+        //로트별 승인, 반려 로직 추가 해야함
 
         return 1;
     }

@@ -16,7 +16,7 @@ public class outbound_app_Controller {
 
     @GetMapping("/admin/outbound_app")
     public String outbound_appFrom(){
-        return "outbound_app";
+        return "admin/outbound_app";
     }
 
     @PostMapping("/admin/outbound_app")

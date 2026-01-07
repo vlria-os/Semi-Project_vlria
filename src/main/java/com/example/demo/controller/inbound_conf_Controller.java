@@ -19,18 +19,16 @@ public class inbound_conf_Controller {
 
     @GetMapping("/field_staff/inbound_conf")
     public String inbound_confFrom(){
-        return "inbound_conf";
+        return "field_staff/inbound_conf";
     }
 
     @PostMapping("/field_staff/inbound_conf")
-    public String inbound_conf(int inbound_detail_id,
-                               @ModelAttribute Lot_inListDto lot_inListDto,
-                               String status,
+    public String inbound_conf(@ModelAttribute Lot_inListDto lot_inListDto,
                                HttpSession session){
         //int confirmer_id=(int)session.getAttribute("webuser_id");
         int confirmer_id=1100;
         List<Lot_inDto> lot_inDtos=lot_inListDto.getLot_inDtos();
-        int n=inboundService.insert_confirm(inbound_detail_id,lot_inDtos,status,confirmer_id);
+        int n=inboundService.insert_confirm(lot_inDtos,confirmer_id);
 
         return "redirect:/field_staff/inbound_conf";
     }

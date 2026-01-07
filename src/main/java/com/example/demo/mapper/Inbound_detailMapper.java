@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface Inbound_detailMapper {
     int insert(Inbound_detailDto inbound_detailDto);
     int update_status(Inbound_detailDto inbound_detailDto);
-    int update_status_rej(int inbound_id);
-    int update_status_conf(int inbound_id);
+    int update_inbStatus_rej(int inbound_detail_id);
+    int update_inbStatus_conf(int inbound_detail_id);
+    int update_appStatus(Inbound_detailDto inbound_detailDto);
+    int update_appStatus_rej(int inbound_detail_id);
+    int update_appStatus_conf(int inbound_detail_id);
 }

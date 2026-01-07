@@ -8,7 +8,7 @@
 
 <h1>출고 승인 (테스트)</h1>
 
-<form th:action="@{/admin/outbound_approval}" method="post">
+<form th:action="@{/admin/outbound_app}" method="post">
 
     <table>
         <tr>
@@ -24,6 +24,26 @@
                 <input type="number"
                        name="outbound_detail_id"
                        value="10"
+                       required>
+            </td>
+        </tr>
+
+        <tr>
+            <th>상품 ID</th>
+            <td>
+                <input type="number"
+                       name="product_id"
+                       value="1"
+                       required>
+            </td>
+        </tr>
+
+        <tr>
+            <th>수량</th>
+            <td>
+                <input type="number"
+                       name="quantity"
+                       value="3"
                        required>
             </td>
         </tr>

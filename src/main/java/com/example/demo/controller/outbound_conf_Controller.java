@@ -17,12 +17,12 @@ import java.util.List;
 public class outbound_conf_Controller {
     private final OutboundService outboundService;
 
-    @GetMapping("/field_staff/outbound_confirm")
+    @GetMapping("/field_staff/outbound_conf")
     public String outbound_confFrom(){
-        return "outbound_conf";
+        return "field_staff/outbound_conf";
     }
 
-    @PostMapping("/field_staff/outbound_confirm")
+    @PostMapping("/field_staff/outbound_conf")
     public String outbound_conf(int outbound_detail_id,
                                @ModelAttribute Lot_outListDto lot_outListDto,
                                String status,
@@ -32,6 +32,6 @@ public class outbound_conf_Controller {
         List<Lot_outDto> lot_outDtos=lot_outListDto.getLot_outDtos();
         int n=outboundService.insert_confirm(outbound_detail_id,status,confirmer_id);
 
-        return "redirect:/field_staff/outbound_confirm";
+        return "redirect:/field_staff/outbound_conf";
     }
 }

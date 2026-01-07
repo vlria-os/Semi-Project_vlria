@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OutboundMapper {
     int insert(OutboundDto outboundDto);
+    int insert_exp(OutboundDto outboundDto);
     int update_status(int outbound_id);
     String select_status(int outbound_id);
 }

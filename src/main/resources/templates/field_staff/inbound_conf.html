@@ -5,19 +5,14 @@
     <title>field_staff/inbound_confirm.html</title>
 </head>
 <body>
-<form th:action="@{/field_staff/inbound_confirm}" method="post">
+<form th:action="@{/field_staff/inbound_conf}" method="post">
 
   <!-- inbound_detail_id -->
-  <div>
-    <label>Inbound Detail ID</label>
-    <input type="number" name="inbound_detail_id" value="1">
-  </div>
-
   <hr>
 
   <!-- LOT 1 -->
   <h3>LOT 1</h3>
-  <input type="hidden" name="lot_inDtos[0].inbound_detail_id" value="1">
+  <input type="number" name="lot_inDtos[0].inbound_detail_id" value="1">
 
   <div>
     <label>Warehouse ID</label>
@@ -39,11 +34,19 @@
     <input type="number" name="lot_inDtos[0].quantity" value="50">
   </div>
 
+  <div>
+    <label>Detail Approval Status</label>
+    <select name="lot_inDtos[0].inbound_status">
+      <option value="CONFIRMED">APPROVED</option>
+      <option value="REJECTED">REJECTED</option>
+    </select>
+  </div>
+
   <hr>
 
   <!-- LOT 2 -->
   <h3>LOT 2</h3>
-  <input type="hidden" name="lot_inDtos[1].inbound_detail_id" value="1">
+  <input type="number" name="lot_inDtos[1].inbound_detail_id" value="1">
 
   <div>
     <label>Warehouse ID</label>
@@ -63,6 +66,14 @@
   <div>
     <label>Quantity</label>
     <input type="number" name="lot_inDtos[1].quantity" value="30">
+  </div>
+
+  <div>
+    <label>Detail Approval Status</label>
+    <select name="lot_inDtos[1].inbound_status">
+      <option value="CONFIRMED">APPROVED</option>
+      <option value="REJECTED">REJECTED</option>
+    </select>
   </div>
 
   <hr>

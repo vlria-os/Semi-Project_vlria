@@ -12,4 +12,5 @@ public interface StockMapper {
     int update_out(StockDto stockDto);
     int update_in(StockDto stockDto);
     List<Select_outboundDto> select_outbound(int product_id);
+    List<Select_outboundDto> select_expiration();
 }

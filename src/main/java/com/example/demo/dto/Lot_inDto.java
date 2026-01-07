@@ -16,6 +16,7 @@ public class Lot_inDto {
     private int inbound_detail_id;
     private int confirmer_id;
     private int warehouse_id;
+    private String inbound_status;
     private LocalDate expiration_date;
     private LocalDate received_date;
     private int quantity;

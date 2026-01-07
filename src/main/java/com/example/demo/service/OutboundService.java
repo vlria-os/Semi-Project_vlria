@@ -51,7 +51,7 @@ public class OutboundService {
                                Outbound_detailDto outbound_detailDto,
                                int approver_id){
 
-        int n=outbound_detailMapper.update_status(outbound_detailDto);
+        int n=outbound_detailMapper.update_appStatus(outbound_detailDto);
         int m=outboundMapper.update_status(outbound_id);
         String status=outboundMapper.select_status(outbound_id);
 
@@ -62,6 +62,10 @@ public class OutboundService {
             int a=approvalMapper.insert_outbound(approvalDto);
         }
 
+        if(outbound_detailDto.getApproval_status().equals("REJECTED")){
+            int b=outbound_detailMapper.update_outStatus_rej(outbound_detailDto.getOutbound_detail_id());
+        }
+
         //출고 확인 예정 로직
         int sum=0;
         List<Select_outboundDto> select_outboundDtos=stockMapper.select_outbound(outbound_detailDto.getProduct_id());
@@ -70,15 +74,15 @@ public class OutboundService {
             if(sum>=outbound_detailDto.getQuantity()) {
                 int quantity=outbound_detailDto.getQuantity()-(sum-s.getQuantity());
                 lot_outMapper.insert(new Lot_outDto(0,outbound_detailDto.getOutbound_detail_id(),
-                                                    s.getWarehouse(),null,0,quantity,s.getStock_id(),null));
-                stockMapper.update_out(new StockDto(s.getStock_id(),0,quantity));
+                                                    s.getWarehouse_id(),null,s.getLot_in_id(),quantity,s.getStock_id(),null));
+                stockMapper.update_out(new StockDto(s.getStock_id(),s.getLot_in_id(),quantity));
                 break;
+            }else {
+                lot_outMapper.insert(new Lot_outDto(0, outbound_detailDto.getOutbound_detail_id(),
+                        s.getWarehouse_id(), null, s.getLot_in_id(), s.getQuantity(), s.getStock_id(), null));
+                stockMapper.update_out(new StockDto(s.getStock_id(), s.getLot_in_id(), s.getQuantity()));
             }
-            lot_outMapper.insert(new Lot_outDto(0,outbound_detailDto.getOutbound_detail_id(),
-                                                s.getWarehouse(),null,0,s.getQuantity(),s.getStock_id(),null));
-            stockMapper.update_out(new StockDto(s.getStock_id(),0,s.getQuantity()));
         }
-
         return 1;
     }
 
@@ -86,21 +90,22 @@ public class OutboundService {
     public int insert_confirm(int outbound_detail_id,
                               String status,
                               int confirmer_id){
+
         List<Lot_outDto> lot_outDtos=lot_outMapper.select_lot(outbound_detail_id);
 
         if(status.equals("REJECTED")){
-            int m=outbound_detailMapper.update_status_rej(outbound_detail_id);
+            int m=outbound_detailMapper.update_outStatus_rej(outbound_detail_id);
             for (Lot_outDto l : lot_outDtos) {
                 stockMapper.update_in(new StockDto(l.getStock_id(),0,l.getQuantity()));
-                int q=lot_outMapper.delete(l.getStock_id());
+                int q=lot_outMapper.delete(l.getLot_out_id());
             }
-
         } else {
             for (Lot_outDto l : lot_outDtos) {
-                int n = lot_outMapper.insert_date(l.getLot_out_id());
+                int b=outbound_detailMapper.update_outStatus_conf(outbound_detail_id);
+                System.out.println(l.getLot_out_id());
+                int n=lot_outMapper.insert_date(l.getLot_out_id());
             }
         }
-
 
         return 1;
     }

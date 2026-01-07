@@ -14,7 +14,7 @@ public class Select_outboundDto {
     private int lot_in_id;
     private int stock_id;
     private int product_id;
-    private int warehouse;
+    private int warehouse_id;
     private Date expiration_date;
     private int quantity;
 }

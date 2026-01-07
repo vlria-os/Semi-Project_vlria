@@ -5,6 +5,9 @@
 
 <mapper namespace="com.example.demo.mapper.Outbound_detailMapper">
     <insert id="insert">
+        <selectKey keyProperty="outbound_detail_id" resultType="int" order="BEFORE">
+            SELECT outbound_detail_seq.NEXTVAL FROM dual
+        </selectKey>
         insert into outbound_detail(
             outbound_detail_id,
             outbound_id,
@@ -13,7 +16,7 @@
             outbound_status,
             quantity
         ) values(
-            outbound_detail_seq.nextval,
+            #{outbound_detail_id},
             #{outbound_id},
             #{product_id},
             'REQUEST',
@@ -21,13 +24,42 @@
             #{quantity}
         )
     </insert>
-    <update id="update_status" parameterType="Outbound_detailDto">
+    <insert id="insert_exp">
+        <selectKey keyProperty="outbound_detail_id" resultType="int" order="BEFORE">
+            SELECT outbound_detail_seq.NEXTVAL FROM dual
+        </selectKey>
+        insert into outbound_detail(
+        outbound_detail_id,
+        outbound_id,
+        product_id,
+        approval_status,
+        outbound_status,
+        quantity
+        ) values(
+        #{outbound_detail_id},
+        #{outbound_id},
+        #{product_id},
+        'APPROVED',
+        'REQUEST',
+        #{quantity}
+        )
+    </insert>
+    <update id="update_outStatus" parameterType="Outbound_detailDto">
+        update outbound_detail set outbound_status=#{outbound_status} where outbound_detail_id=#{outbound_detail_id}
+    </update>
+    <update id="update_outStatus_rej" parameterType="int">
+        update outbound_detail set outbound_status='REJECTED' where outbound_detail_id=#{outbound_detail_id}
+    </update>
+    <update id="update_outStatus_conf" parameterType="int">
+        update outbound_detail set outbound_status='CONFIRMED' where outbound_detail_id=#{outbound_detail_id}
+    </update>
+    <update id="update_appStatus" parameterType="Outbound_detailDto">
         update outbound_detail set approval_status=#{approval_status} where outbound_detail_id=#{outbound_detail_id}
     </update>
-    <update id="update_status_ref" parameterType="Outbound_detailDto">
+    <update id="update_appStatus_rej" parameterType="int">
         update outbound_detail set approval_status='REJECTED' where outbound_detail_id=#{outbound_detail_id}
     </update>
-    <update id="update_status_conf" parameterType="Outbound_detailDto">
+    <update id="update_appStatus_conf" parameterType="int">
         update outbound_detail set approval_status='CONFIRMED' where outbound_detail_id=#{outbound_detail_id}
     </update>
 </mapper>

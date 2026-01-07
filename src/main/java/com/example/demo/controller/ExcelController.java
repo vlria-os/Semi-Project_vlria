@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,8 +23,8 @@ public class ExcelController {
 
     @GetMapping("/download")
     public void download(HttpServletResponse response) throws IOException {
-        //오늘 날짜 받아오기
-        String fileName = URLEncoder.encode("approval_list.xlsx", "UTF-8").replaceAll("\\+", "%20");
+        String date=LocalDateTime.now().toString();
+        String fileName = URLEncoder.encode("approval_list"+date+".xlsx", "UTF-8").replaceAll("\\+", "%20");
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
